@@ -23,11 +23,9 @@ public class PostController {
 
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<PostOutput> create(@Valid @RequestBody PostInput postInput){
-
         PostOutput postOutput = service.create(postInput);
-        return ResponseEntity.ok(postOutput);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postOutput);
     }
 
     @GetMapping("{id}")
