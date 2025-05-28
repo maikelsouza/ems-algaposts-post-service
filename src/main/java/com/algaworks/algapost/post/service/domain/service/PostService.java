@@ -5,8 +5,12 @@ import com.algaworks.algapost.post.service.api.model.PostOutput;
 import com.algaworks.algapost.post.service.domain.model.Post;
 import com.algaworks.algapost.post.service.domain.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +26,13 @@ public class PostService {
         post.setSummary(getThreeFirstLines(post.getBody()));
         post = repository.save(post);
         return PostOutput.convertToOutput(post);
+    }
+
+    public PostOutput findById(String uuid){
+       return repository.findById(UUID.fromString(uuid))
+                .map(PostOutput::convertToOutput)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+
     }
 
     private String getThreeFirstLines(String text) {

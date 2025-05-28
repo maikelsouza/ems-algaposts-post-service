@@ -28,4 +28,10 @@ public class PostController {
         return ResponseEntity.ok(postOutput);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<PostOutput> findById(@PathVariable String id){
+        PostOutput postOutput = service.findById(id);
+        return ResponseEntity.ok(postOutput);
+    }
+
 }
