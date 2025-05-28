@@ -5,6 +5,8 @@ import com.algaworks.algapost.post.service.api.model.PostOutput;
 import com.algaworks.algapost.post.service.domain.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,12 @@ public class PostController {
     public ResponseEntity<PostOutput> findById(@PathVariable String id){
         PostOutput postOutput = service.findById(id);
         return ResponseEntity.ok(postOutput);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<PostOutput>> search(Pageable pageable){
+            Page<PostOutput> page = service.findAllPaged(pageable);
+            return ResponseEntity.ok(page);
     }
 
 }
