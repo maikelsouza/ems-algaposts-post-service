@@ -33,16 +33,16 @@ public class PostService {
         return PostOutput.convertToOutput(post);
     }
 
+    @Transactional
     public void updateValuePost(PostProcessingResultMessage postProcessingResultMessage){
 
-        Post post =  repository.findById(postProcessingResultMessage.getPostId())
+        Post post = repository.findById(postProcessingResultMessage.getPostId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         post.setCalculatedValue(postProcessingResultMessage.getCalculatedValue());
         post.setWordCount(postProcessingResultMessage.getWordCount());
 
         repository.save(post);
-
     }
 
     public void calculatePostValeu(PostOutput postOutput){
