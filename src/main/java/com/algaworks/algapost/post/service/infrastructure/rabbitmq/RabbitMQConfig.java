@@ -13,9 +13,7 @@ public class RabbitMQConfig {
 
     public static final String FANOUT_EXCHANGE_POST_PROCESSING = "post-service.post-processing.v1.e";
 
-    public static final String QUEUE_POST_PROCESSING = "post-service.post-processing-result.v1.q";
-
-
+    public static final String QUEUE_POST_PROCESSING_RESULT = "post-service.post-processing-result.v1.q";
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper){
@@ -29,7 +27,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue queue(){
-        return QueueBuilder.durable(QUEUE_POST_PROCESSING).build();
+        return QueueBuilder.durable(QUEUE_POST_PROCESSING_RESULT).build();
     }
 
     @Bean
