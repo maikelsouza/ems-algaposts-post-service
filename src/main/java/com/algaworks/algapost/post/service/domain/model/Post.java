@@ -36,4 +36,8 @@ public class Post {
 
     private String summary;
 
+    private int wordCount;
+
+    private double calculatedValue;
+
 }

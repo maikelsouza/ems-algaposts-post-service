@@ -1,6 +1,7 @@
 package com.algaworks.algapost.post.service.api.model;
 
 import com.algaworks.algapost.post.service.domain.model.Post;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,6 +19,12 @@ public class PostOutput {
 
     private String author;
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int wordCount;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private double calculatedValue;
+
 
     public static PostOutput convertToOutput(Post post){
         return PostOutput.builder()
@@ -25,6 +32,8 @@ public class PostOutput {
                 .body(post.getBody())
                 .author(post.getAuthor())
                 .title(post.getTitle())
+                .wordCount(post.getWordCount())
+                .calculatedValue(post.getCalculatedValue())
                 .build();
     }
 
