@@ -14,6 +14,7 @@ public class PostInput {
 
     private String body;
 
+
     public static Post convertToModel(PostInput postInput){
         return Post.builder()
                 .author(postInput.getAuthor())
