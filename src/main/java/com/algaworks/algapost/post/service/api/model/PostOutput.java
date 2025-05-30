@@ -14,8 +14,6 @@ public class PostOutput {
 
     private String title;
 
-    private String summary;
-
     private String body;
 
     private String author;
@@ -26,7 +24,6 @@ public class PostOutput {
                 .id(post.getId())
                 .body(post.getBody())
                 .author(post.getAuthor())
-                .summary(post.getSummary())
                 .title(post.getTitle())
                 .build();
     }
