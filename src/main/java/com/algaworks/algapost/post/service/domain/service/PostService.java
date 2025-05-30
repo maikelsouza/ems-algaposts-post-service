@@ -1,9 +1,6 @@
 package com.algaworks.algapost.post.service.domain.service;
 
-import com.algaworks.algapost.post.service.api.model.PostInput;
-import com.algaworks.algapost.post.service.api.model.PostOutput;
-import com.algaworks.algapost.post.service.api.model.PostProcessingRequestMessage;
-import com.algaworks.algapost.post.service.api.model.PostSummaryOutput;
+import com.algaworks.algapost.post.service.api.model.*;
 import com.algaworks.algapost.post.service.domain.model.Post;
 import com.algaworks.algapost.post.service.domain.repository.PostRepository;
 import com.algaworks.algapost.post.service.infrastructure.rabbitmq.RabbitMQConfig;
@@ -34,6 +31,18 @@ public class PostService {
         post.setSummary(getThreeFirstLines(post.getBody()));
         post = repository.save(post);
         return PostOutput.convertToOutput(post);
+    }
+
+    public void updateValuePost(PostProcessingResultMessage postProcessingResultMessage){
+
+        Post post =  repository.findById(postProcessingResultMessage.getPostId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        post.setCalculatedValue(postProcessingResultMessage.getCalculatedValue());
+        post.setWordCount(postProcessingResultMessage.getWordCount());
+
+        repository.save(post);
+
     }
 
     public void calculatePostValeu(PostOutput postOutput){
