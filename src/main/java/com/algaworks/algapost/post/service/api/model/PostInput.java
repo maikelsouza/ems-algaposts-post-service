@@ -1,6 +1,7 @@
 package com.algaworks.algapost.post.service.api.model;
 
 import com.algaworks.algapost.post.service.domain.model.Post;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,10 +9,13 @@ import lombok.Data;
 @Builder
 public class PostInput {
 
+    @NotNull
     private String title;
 
+    @NotNull
     private String author;
 
+    @NotNull
     private String body;
 
 
