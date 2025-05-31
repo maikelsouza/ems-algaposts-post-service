@@ -3,12 +3,10 @@ package com.algaworks.algapost.post.service.infrastructure.rabbitmq;
 import com.algaworks.algapost.post.service.api.model.PostProcessingResultMessage;
 import com.algaworks.algapost.post.service.domain.service.PostService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RabbitMQListener {
