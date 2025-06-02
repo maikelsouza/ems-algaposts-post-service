@@ -8,12 +8,22 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class RabbitMQConfig {
 
+
+    private static final String POST_PROCESSING_RESULT = "post-service.post-processing-result.v1";    
+
+    public static final String QUEUE_POST_PROCESSING_RESULT = POST_PROCESSING_RESULT +".q";    
+
+    public static final String DEAD_LETTER_QUEUE_POST_PROCESSING_RESULT = POST_PROCESSING_RESULT + ".dlq";
+
     public static final String FANOUT_EXCHANGE_POST_PROCESSING = "post-service.post-processing.v1.e";
 
-    public static final String QUEUE_POST_PROCESSING_RESULT = "post-service.post-processing-result.v1.q";
+    
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper){
@@ -26,13 +36,24 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue queue(){
-        return QueueBuilder.durable(QUEUE_POST_PROCESSING_RESULT).build();
+    public Queue queuePostProcessingResult(){
+        Map<String, Object> args = new HashMap<>();
+        args.put("x-dead-letter-exchange", "");
+        args.put("x-dead-letter-routing-key", DEAD_LETTER_QUEUE_POST_PROCESSING_RESULT);
+        return QueueBuilder.durable(QUEUE_POST_PROCESSING_RESULT)
+                .withArguments(args)
+                .build();
     }
 
     @Bean
-    public Binding binding(){
-        return BindingBuilder.bind(queue()).to(exchangePostProcessingResult());
+    public Queue deadLetterQueuePostProcessingResult(){
+        return QueueBuilder.durable(DEAD_LETTER_QUEUE_POST_PROCESSING_RESULT)
+                .build();
+    }
+
+    @Bean
+    public Binding bindingPostProcessingResult(){
+        return BindingBuilder.bind(queuePostProcessingResult()).to(exchangePostProcessingResult());
     }
 
     @Bean
