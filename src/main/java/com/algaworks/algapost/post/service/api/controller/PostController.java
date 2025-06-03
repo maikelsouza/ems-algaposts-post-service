@@ -21,7 +21,6 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<PostOutput> create(@Valid @RequestBody PostInput postInput){
-
         PostOutput postOutput = service.create(postInput);
         service.calculatePostValeu(postOutput);
         return ResponseEntity.status(HttpStatus.CREATED).body(postOutput);
