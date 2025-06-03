@@ -24,8 +24,6 @@ public class PostController {
 
         PostOutput postOutput = service.create(postInput);
         service.calculatePostValeu(postOutput);
-
-
         return ResponseEntity.status(HttpStatus.CREATED).body(postOutput);
     }
 
